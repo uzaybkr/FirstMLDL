@@ -39,6 +39,14 @@ def test_neural_network_learns_xor_where_linear_model_cannot():
     assert accuracy(net.predict(X), y) > 0.95
 
 
+def test_saved_weights_reload_to_identical_predictions(tmp_path):
+    X, y = blobs()
+    model = NeuralNetwork(hidden=8, epochs=5).fit(X, y)
+    path = tmp_path / "weights" / "nn"
+    model.save(path)
+    np.testing.assert_array_equal(NeuralNetwork.load(path).predict_proba(X), model.predict_proba(X))
+
+
 @pytest.mark.parametrize("model", [SoftmaxRegression(), NeuralNetwork(hidden=5)], ids=["softmax", "nn"])
 def test_backprop_matches_numerical_gradient(model):
     X = rng.normal(size=(8, 4))

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import numpy as np
 
 
@@ -60,6 +62,19 @@ class Classifier:
 
     def predict(self, X):
         return self.predict_proba(X).argmax(axis=1)
+
+    def save(self, path):
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("wb") as f:
+            np.savez(f, **self.params)
+
+    @classmethod
+    def load(cls, path):
+        model = cls()
+        with np.load(path) as f:
+            model.params = {name: f[name] for name in f.files}
+        return model
 
 
 class SoftmaxRegression(Classifier):

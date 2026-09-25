@@ -23,10 +23,13 @@ python -m venv .venv
 .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
 
-pytest                          # 5 tests, ~2 s
+pytest                          # 6 tests, ~2 s
 firstmldl nn                    # downloads MNIST (~11 MB, checksum-verified) on first run
 firstmldl softmax --epochs 20
 firstmldl nn --hidden 256 --lr 0.05
+
+firstmldl nn --save weights/mnist_nn.npz   # train once, keep the weights
+firstmldl nn --load weights/mnist_nn.npz   # evaluate instantly, no retraining
 ```
 
 ## Use it as a library
@@ -38,7 +41,12 @@ from firstmldl.data import load_mnist
 X_train, y_train, X_test, y_test = load_mnist()
 model = NeuralNetwork(hidden=128, epochs=10).fit(X_train, y_train, verbose=True)
 print(accuracy(model.predict(X_test), y_test))
+
+model.save("weights/mnist_nn.npz")
+model = NeuralNetwork.load("weights/mnist_nn.npz")
 ```
+
+Weights are saved as a plain `.npz` file, one array per layer. Loading never unpickles anything, so it's safe to load weights from other people.
 
 ## The learning path
 
@@ -53,6 +61,7 @@ print(accuracy(model.predict(X_test), y_test))
 - softmax regression separates clusters
 - the neural network learns XOR, which a linear model can't
 - backpropagation matches a numerical gradient estimate
+- saved weights reload to identical predictions
 
 ## Project layout
 
@@ -79,7 +88,7 @@ Add it to the gradient-check test, and the math is verified for you.
 
 ## Roadmap
 
-- [ ] Save and load trained weights
+- [x] Save and load trained weights
 - [ ] Convolutional network
 - [ ] Personalized models trained on our own data
 
