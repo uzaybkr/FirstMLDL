@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "firstmldl"
+version = "0.1.0"
+description = "Machine learning from scratch in NumPy: from linear regression to a neural network on MNIST."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Uzay Bekaroglu" }]
+dependencies = ["numpy>=1.24"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+firstmldl = "firstmldl.__main__:main"
+
+[tool.setuptools]
+packages = ["firstmldl"]
