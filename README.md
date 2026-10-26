@@ -1,5 +1,7 @@
 # FirstMLDL
 
+[![CI](https://github.com/uzaybkr/FirstMLDL/actions/workflows/ci.yml/badge.svg)](https://github.com/uzaybkr/FirstMLDL/actions/workflows/ci.yml)
+
 Machine learning and deep learning **from scratch** in pure NumPy. No PyTorch, no TensorFlow, no scikit-learn.
 The code starts with a straight line fitted by gradient descent and ends with a neural network that reads handwritten digits.
 
@@ -17,7 +19,7 @@ Both use 10 epochs, learning rate 0.1, mini-batches of 64, and seed 0.
 ## Quickstart
 
 ```bash
-git clone https://github.com/<your-username>/FirstMLDL.git
+git clone https://github.com/uzaybkr/FirstMLDL.git
 cd FirstMLDL
 python -m venv .venv
 .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
